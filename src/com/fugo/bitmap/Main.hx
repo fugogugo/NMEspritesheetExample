@@ -20,7 +20,7 @@ class Main extends Sprite
 {
 	var inited:Bool;
 	var lastTime:Int = 0;
-	var animated:AnimatedSprite;
+	var animated:AnimatedSprite;	//Sprite class used for Animation
 	
 	function resize(e) 
 	{
@@ -33,7 +33,11 @@ class Main extends Sprite
 		if (inited) return;
 		inited = true;
 		
+		//load the bitmap spritesheet from asset 
 		var spritesheet:Spritesheet = BitmapImporter.create(Assets.getBitmapData("img/kit_from_firefox.png"), 3, 9, 56, 80);
+		
+		//add behaviours to spritesheet. 
+		//each animation can have different behaviour like the animation speed(fps), loop, etc
 		spritesheet.addBehavior(new BehaviorData("stand", [0, 1, 2], true));
 		spritesheet.addBehavior(new BehaviorData("down", [3, 4, 5], false,15));
 		spritesheet.addBehavior(new BehaviorData("jump", [6, 7, 8], false,15));
@@ -44,8 +48,11 @@ class Main extends Sprite
 		spritesheet.addBehavior(new BehaviorData("flykick", [21, 22, 23], false,10));
 		spritesheet.addBehavior(new BehaviorData("dizzy", [24, 25, 26], true));
 		
+		//assign the spritesheet to animation sprite
 		animated = new AnimatedSprite(spritesheet, true);
-		animated.showBehaviors(["down","jump","hit","punch"]);
+		
+		animated.showBehavior("stand");
+		//animated.showBehaviors(["down","jump","hit","punch"]);
 		
 		addChild(animated);
 		animated.x = stage.stageWidth / 2-animated.width/2;
